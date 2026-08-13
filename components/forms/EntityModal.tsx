@@ -177,7 +177,7 @@ export function EntityModal({
           trigger ? (
             trigger
           ) : (
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
               <Plus className="mr-2 h-4 w-4" /> Add Entity
             </Button>
           )

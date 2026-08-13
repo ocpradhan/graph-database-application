@@ -19,14 +19,15 @@ export function CustomNode({ data, selected }: NodeProps<CustomNodeType>) {
   const showOutgoing =
     label === "Supplier" || label === "Component" || label === "LogisticsHub";
 
-  let borderStyle = "border-slate-300 bg-white text-slate-800";
+  let borderStyle =
+    "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100";
 
   if (selected) {
     borderStyle =
-      "border-blue-600 bg-blue-50 text-blue-900 ring-2 ring-blue-500 ring-offset-2";
+      "border-blue-600 bg-blue-50 dark:bg-blue-950/50 text-blue-900 dark:text-blue-200 ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-slate-900";
   } else if (isImpacted) {
     borderStyle =
-      "border-rose-600 bg-rose-50 text-rose-900 ring-2 ring-rose-500 ring-offset-2 animate-pulse";
+      "border-rose-600 bg-rose-50 dark:bg-rose-950/50 text-rose-900 dark:text-rose-200 ring-2 ring-rose-500 ring-offset-2 dark:ring-offset-slate-900 animate-pulse";
   }
 
   return (
@@ -42,13 +43,17 @@ export function CustomNode({ data, selected }: NodeProps<CustomNodeType>) {
       )}
 
       <div className="flex flex-col gap-1">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
           {label}
         </span>
-        <span className="font-semibold text-sm leading-tight">{name}</span>
-        <div className="mt-1 flex items-center justify-between text-[10px] text-slate-500 border-t pt-1">
+        <span className="font-semibold text-sm leading-tight text-slate-900 dark:text-slate-100">
+          {name}
+        </span>
+        <div className="mt-1 flex items-center justify-between text-[10px] border-t pt-1 text-slate-500 dark:text-slate-400 dark:border-slate-700">
           <span>Risk Score:</span>
-          <span className="font-bold text-slate-700">{riskScore}/100</span>
+          <span className="font-bold text-slate-700 dark:text-slate-300">
+            {riskScore}/100
+          </span>
         </div>
       </div>
 

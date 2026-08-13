@@ -128,3 +128,62 @@
     @apply font-sans;
   }
 }
+
+/* globals.css */
+
+/* Light Mode React Flow Controls */
+.react-flow__controls {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+.react-flow__controls-button {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  fill: #334155 !important;
+}
+
+.react-flow__controls-button:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* Dark Mode React Flow Controls */
+.dark .react-flow__controls {
+  border-color: #334155;
+}
+
+.dark .react-flow__controls-button {
+  background-color: #1e293b !important;
+  border-bottom: 1px solid #334155 !important;
+  fill: #f1f5f9 !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .react-flow__controls-button:hover {
+  background-color: #334155 !important;
+}
+
+/* Light Mode Attribution */
+.react-flow__attribution {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  color: #64748b !important; /* Tailwind slate-500 */
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+/* Dark Mode Attribution */
+.dark .react-flow__attribution {
+  background-color: rgba(
+    15,
+    23,
+    42,
+    0.7
+  ) !important; /* Tailwind slate-900 with transparency */
+  color: #94a3b8 !important; /* Tailwind slate-400 */
+}
+
+.dark .react-flow__attribution a {
+  color: #94a3b8 !important;
+}

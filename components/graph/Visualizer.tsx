@@ -110,6 +110,17 @@ export function GraphVisualizer({
           stroke: isImpacted ? "#e11d48" : "#94a3b8",
           strokeWidth: isImpacted ? 3 : 1.5,
         },
+        labelStyle: {
+          fill: "#cbd5e1",
+          fontWeight: 600,
+          fontSize: 10,
+        },
+        labelBgStyle: {
+          fill: "#1e293b",
+          rx: 4,
+          ry: 4,
+        },
+        labelBgPadding: [6, 4] as [number, number],
         markerEnd: {
           type: MarkerType.ArrowClosed,
           color: isImpacted ? "#e11d48" : "#94a3b8",
@@ -143,7 +154,7 @@ export function GraphVisualizer({
   };
 
   return (
-    <div className="h-150 w-full rounded-2xl border bg-slate-50 shadow-inner">
+    <div className="h-150 w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-inner">
       <ReactFlow
         nodes={flowNodes}
         edges={flowEdges}
@@ -157,7 +168,12 @@ export function GraphVisualizer({
         fitView
         nodesDraggable={true}
       >
-        <Background gap={16} size={1} color="#e2e8f0" />
+        <Background
+          gap={16}
+          size={1}
+          className="bg-slate-50 dark:bg-slate-900"
+          color="currentColor"
+        />
         <Controls />
       </ReactFlow>
     </div>
