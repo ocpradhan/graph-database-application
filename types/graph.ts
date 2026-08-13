@@ -22,3 +22,26 @@ export interface GraphData {
   nodes: GraphNode[];
   edges: GraphEdge[];
 }
+
+export interface NodeDetails {
+  id: string;
+  name: string;
+  label: GraphNode["label"];
+  riskScore: number;
+  connectToNodeId: string;
+  relationshipType: string;
+}
+
+export interface CreateNodeParams extends GraphNode {
+  connectToNodeId?: string;
+  relationshipType?: EdgeRelationship;
+}
+
+export interface UpdateNodeParams {
+  id: string;
+  name: string;
+  label: NodeLabel;
+  riskScore: number;
+  connectToNodeId?: string;
+  relationshipType?: EdgeRelationship;
+}
