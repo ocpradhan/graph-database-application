@@ -18,6 +18,7 @@ import "@xyflow/react/dist/style.css";
 import { GraphNode, GraphEdge } from "@/types/graph";
 import { toast } from "sonner";
 import { CustomNode } from "../nodes/CustomNode";
+import { createRelationship, ServiceError } from "@/lib/data-service";
 
 interface VisualizerProps {
   initialNodes: GraphNode[];
@@ -132,29 +133,25 @@ export function GraphVisualizer({
   const onConnect = async (connection: Connection) => {
     if (!connection.source || !connection.target) return;
 
-    // 1. Call your API to store the relationship in CognoDB
-    const res = await fetch("/api/relationships", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sourceId: connection.source,
-        targetId: connection.target,
-        relationshipType: "SUPPLIES",
-      }),
-    });
+    try {
+      await createRelationship(
+        connection.source,
+        connection.target,
+        "SUPPLIES",
+      );
 
-    if (res.ok) {
       setEdges((eds) => addEdge(connection, eds));
       toast.success("Edge connected successfully.");
-    } else {
-      const errorData = await res.json();
-      console.error("Failed to create relationship:", errorData.error);
-      toast.error("Failed to connect edges.");
+    } catch (error: unknown) {
+      console.error("Failed to create relationship:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to connect edges.",
+      );
     }
   };
 
   return (
-    <div className="h-150 w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-inner">
+    <div className="h-160 w-full rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-inner">
       <ReactFlow
         nodes={flowNodes}
         edges={flowEdges}

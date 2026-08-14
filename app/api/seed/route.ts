@@ -3,11 +3,18 @@ import { runGraphSeed } from "@/lib/db/seedHelper";
 
 export async function POST() {
   try {
-    await runGraphSeed();
-    return NextResponse.json({ message: "Database seeded successfully" });
+    const result = await runGraphSeed();
+
+    return NextResponse.json({
+      message: "success",
+      data: result ?? { status: "seeded" },
+    });
   } catch (error) {
     return NextResponse.json(
-      { error: (error as Error).message },
+      {
+        message: false,
+        error: (error as Error).message || "Failed to seed database",
+      },
       { status: 500 },
     );
   }

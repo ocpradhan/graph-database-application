@@ -32,7 +32,8 @@ export interface NodeDetails {
   relationshipType: string;
 }
 
-export interface CreateNodeParams extends GraphNode {
+export interface CreateNodeParams extends Omit<GraphNode, "id"> {
+  id?: string;
   connectToNodeId?: string;
   relationshipType?: EdgeRelationship;
 }

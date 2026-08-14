@@ -1,4 +1,3 @@
-// Node CRUD endpoints
 import { NextResponse } from "next/server";
 import { createNodeWithRelationship } from "@/lib/db/queries";
 import { z } from "zod";
@@ -22,12 +21,12 @@ export const createNodeSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
     const result = createNodeSchema.safeParse(body);
 
     if (!result.success) {
       return NextResponse.json(
         {
+          message: false,
           errors: formatZodErrors(result.error),
         },
         { status: 400 },
@@ -47,13 +46,19 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(
-      { success: true, node: nodeResult },
+      {
+        message: "success",
+        data: nodeResult,
+      },
       { status: 201 },
     );
   } catch (error) {
     return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 400 },
+      {
+        message: false,
+        error: (error as Error).message || "Internal server error",
+      },
+      { status: 500 },
     );
   }
 }

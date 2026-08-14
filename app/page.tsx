@@ -2,7 +2,7 @@ import { DashboardClient } from "@/components/dashboard/DashboardClient";
 import { getGraphData } from "@/lib/db/queries";
 import { GraphData } from "@/types/graph";
 
-export default async function DashboardPage() {
+export default async function Page() {
   let initialGraph: GraphData = { nodes: [], edges: [] };
 
   try {

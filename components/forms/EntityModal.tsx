@@ -1,6 +1,12 @@
 // Node/Edge creation dialogs
 "use client";
 
+import {
+  createNode,
+  updateNode,
+  fetchNodeDetails,
+  ServiceError,
+} from "@/lib/data-service";
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
@@ -11,7 +17,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import { GraphNode } from "@/types/graph";
+import { EdgeRelationship, GraphNode, NodeLabel } from "@/types/graph";
 import { toast } from "sonner";
 
 interface EntityModalProps {
@@ -69,21 +75,20 @@ export function EntityModal({
 
     let isMounted = true;
 
-    const fetchNodeDetails = async () => {
+    const loadNodeDetails = async () => {
       setLoadingDetails(true);
       try {
-        const res = await fetch(
-          `/api/nodes/${encodeURIComponent(initialData.id)}`,
-        );
-        if (res.ok && isMounted) {
-          const data = await res.json();
+        // Use your service function directly instead of raw fetch!
+        const data = await fetchNodeDetails(initialData.id);
+
+        if (isMounted) {
           setName(data.name || initialData.name || "");
           setLabel(data.label || initialData.label || "Supplier");
           setRiskScore(data.riskScore ?? initialData.riskScore ?? 50);
           setConnectToNodeId(data.connectToNodeId || "");
           setRelationshipType(data.relationshipType || "SUPPLIES");
         }
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Failed to map node details:", error);
         if (isMounted) {
           toast.error("Failed to load full node relationship details.");
@@ -93,7 +98,7 @@ export function EntityModal({
       }
     };
 
-    fetchNodeDetails();
+    loadNodeDetails();
 
     return () => {
       isMounted = false;
@@ -107,60 +112,38 @@ export function EntityModal({
 
     const payload = {
       name,
-      label,
+      label: label as NodeLabel,
       riskScore: Number(riskScore),
       connectToNodeId: connectToNodeId || undefined,
-      relationshipType: connectToNodeId ? relationshipType : undefined,
+      relationshipType: (connectToNodeId ? relationshipType : undefined) as
+        | EdgeRelationship
+        | undefined,
     };
 
     try {
       if (isEditMode && initialData) {
-        // PUT request for editing
-        const res = await fetch(`/api/nodes/${initialData.id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const resData = await res.json();
-
-        if (res.ok) {
-          toast.success("Entity edited successfully.");
-        } else {
-          if (res.status === 400 && resData.errors) {
-            setFieldErrors(resData.errors);
-            toast.error("Please fix the errors in the form.");
-          } else {
-            toast.error("Failed edit an entity.");
-          }
-          return;
-        }
+        await updateNode({ id: initialData.id, ...payload });
+        toast.success("Entity edited successfully.");
       } else {
-        const res = await fetch("/api/nodes", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        const resData = await res.json();
-
-        if (res.ok) {
-          toast.success("Entity added successfully.");
-        } else {
-          if (res.status === 400 && resData.errors) {
-            setFieldErrors(resData.errors);
-            toast.error("Please fix the errors in the form.");
-          } else {
-            toast.error("Failed edit an entity.");
-          }
-          return;
-        }
+        await createNode(payload);
+        toast.success("Entity added successfully.");
       }
 
       handleOpenChange(false);
       onSuccess();
-    } catch (error) {
-      console.error("Failed to create node:", error);
+    } catch (error: unknown) {
+      console.error("Failed to submit node:", error);
+
+      const err = error as ServiceError;
+
+      if (err?.errors) {
+        setFieldErrors(err.errors);
+        toast.error("Please fix the errors in the form.");
+      } else {
+        toast.error(
+          isEditMode ? "Failed to update entity." : "Failed to create entity.",
+        );
+      }
     } finally {
       setSubmitting(false);
     }

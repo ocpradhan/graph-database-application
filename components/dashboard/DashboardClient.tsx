@@ -1,5 +1,12 @@
 "use client";
 
+import {
+  fetchGraph as getGraph,
+  deleteNode,
+  seedGraph as resetGraph,
+  simulateBlastRadius,
+} from "@/lib/data-service";
+
 import { useState } from "react";
 import { GraphVisualizer } from "@/components/graph/Visualizer";
 import { EntityModal } from "@/components/forms/EntityModal";
@@ -43,9 +50,8 @@ export function DashboardClient({
   const fetchGraph = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/graph");
-      const json = await res.json();
-      setData(json);
+      const res = await getGraph();
+      setData(res);
     } catch (error) {
       console.error("Failed to load graph:", error);
       toast.error("Failed to synchronize graph data.");
@@ -59,26 +65,21 @@ export function DashboardClient({
     setDeleting(true);
 
     try {
-      const res = await fetch(
-        `/api/nodes/${encodeURIComponent(selectedNode.id)}`,
-        {
-          method: "DELETE",
-        },
-      );
+      await deleteNode(selectedNode.id);
+      const deletedName = selectedNode.name;
 
-      if (res.ok) {
-        const deletedName = selectedNode.name;
-        setSelectedNode(null);
-        setImpactedNodeIds([]);
-        await fetchGraph();
+      setSelectedNode(null);
+      setImpactedNodeIds([]);
+      await fetchGraph();
 
-        toast.success(`Entity "${deletedName} deleted successfully."`);
-      } else {
-        toast.error("Failed to delete entity.");
-      }
-    } catch (error) {
+      toast.success(`Entity "${deletedName}" deleted successfully.`);
+    } catch (error: unknown) {
       console.error("Failed to delete node:", error);
-      toast.error("An error occurred while deleting the entity.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while deleting the entity.",
+      );
     } finally {
       setDeleting(false);
     }
@@ -87,37 +88,42 @@ export function DashboardClient({
   const seedData = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/seed", { method: "POST" });
-      if (res.ok) {
-        await fetchGraph();
-        setSelectedNode(null);
-        setImpactedNodeIds([]);
+      await resetGraph();
 
-        toast.success("Database successfully reset & re-seeded!");
-      } else {
-        toast.error("Failed to re-seed database.");
-      }
-    } catch (error) {
+      setSelectedNode(null);
+      setImpactedNodeIds([]);
+
+      // Refresh graph state after re-seeding
+      await fetchGraph();
+
+      toast.success("Database successfully reset & re-seeded!");
+    } catch (error: unknown) {
       console.error("Failed to seed database:", error);
-      toast.error("An error occurred while seeding the graph.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "An error occurred while seeding the graph.",
+      );
     } finally {
       setLoading(false);
     }
   };
-
   const handleSimulateDisruption = async () => {
     if (!selectedNode) return;
     setSimulating(true);
     try {
-      const res = await fetch(
-        `/api/analytics/blast-radius?nodeId=${selectedNode.id}`,
-      );
-      const json = await res.json();
-      setImpactedNodeIds(json.impactedNodeIds || []);
+      const res = await simulateBlastRadius(selectedNode.id);
 
-      toast.info(
-        `Blast radius calculated: ${json.impactedNodeIds?.length || 0} downstream nodes impacted.`,
-      );
+      if (res.message === "success") {
+        const impactedIds = res.analytics?.impactedNodeIds || [];
+        setImpactedNodeIds(impactedIds || []);
+
+        toast.info(
+          `Blast radius calculated: ${impactedIds?.length || 0} downstream nodes impacted.`,
+        );
+      } else {
+        toast.error(res.error);
+      }
     } catch (error) {
       console.error("Failed to calculate blast radius:", error);
       toast.error("Failed to simulate blast radius.");

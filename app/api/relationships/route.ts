@@ -35,16 +35,16 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       {
-        success: true,
-        message: "Relationship created successfully",
-        id: edgeId,
+        message: "success",
+        data: { id: edgeId },
       },
       { status: 201 },
     );
   } catch (error) {
     return NextResponse.json(
       {
-        error: (error as Error).message,
+        message: false,
+        error: (error as Error).message || "Failed to create relationship",
       },
       { status: 400 },
     );
