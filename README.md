@@ -6,7 +6,7 @@
 
 ## Submission Links
 
-- **Hosted Application Demo:** [\[REPLACE_WITH_YOUR_HOSTED_APP_URL\]](https://supply-chain-resilience-tracker.vercel.app/)
+- **Hosted Application Demo:** [Supply Chain Resilience Tracker Link](https://supply-chain-resilience-tracker.vercel.app/)
 - **Screen Recording Video:** [REPLACE_WITH_YOUR_LOOM_OR_DRIVE_LINK]
 - **GitHub Repository:** [REPLACE_WITH_YOUR_GITHUB_REPO_URL]
 
