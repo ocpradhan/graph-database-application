@@ -22,6 +22,53 @@
 
 ---
 
+## 🚀 Setup & Running Instructions
+
+Follow these steps to set up CognoDB, configure environment variables, seed the database, and run the application locally.
+
+---
+
+### Step 1: Create a CognoDB Cloud Instance
+
+1. Go to the [CognoDB Console](https://console.cognodb.com/signup) and sign up for a free account.
+2. From the dashboard console, click **Create Instance**.
+3. Select the free **c0** instance tier and pick your preferred region (provisions in under a minute; no credit card required).
+4. Copy and securely save your connection details:
+   - **Connection URI:** `bolt+s://<instance-id>.databases.cognodb.cloud`
+   - **Username:** `cognodb`
+   - **Password:** _(Generated password shown only once upon creation)_
+
+---
+
+### Step 2: Environment Variable Configuration
+
+1. In the root directory of this project, create a file named `.env.local`.
+2. Paste the following environment variables into `.env.local` and replace the placeholders with your CognoDB credentials:
+
+```env
+COGNODB_URI=bolt+s://<your-instance-id>.databases.cognodb.cloud
+COGNODB_USER=cognodb
+COGNODB_PASSWORD=<your-saved-password>
+```
+
+---
+
+### Step 3: Install Dependencies
+
+npm install
+
+### Step 4: Seed the Database
+
+Populate realistic supply chain entities (Supplier, Component, Product, LogisticsHub) and relationships into your CognoDB instance:
+npm run seed
+
+### Step 5: Start the Application
+
+npm run dev
+Open http://localhost:3000 in your browser to interact with the application.
+
+---
+
 ## Graph DB vs Relational DB Justification
 
 This application relies on multi-hop connectivity queries to compute downstream blast radiuses when a vendor or hub experiences an outage.
@@ -32,7 +79,7 @@ CognoDB utilizes **index-free adjacency**, storing relationships as direct physi
 
 ---
 
-## 📐 Graph Data Model
+## Graph Data Model
 
 The application models nodes representing critical network entities and directed, typed relationships representing operational dependencies.
 
@@ -57,6 +104,18 @@ The application models nodes representing critical network entities and directed
      |                                                                 |
      +--------------------[ SHIPPED_VIA ]------------------------------+
 ```
+
+### Custom Node Connection Handles
+
+To ensure intuitive visual flow on the React Flow canvas, node handles are strictly typed based on domain logic:
+
+- **Top Handle (Upper Connection — Incoming Edges):**
+  - **Visible on:** `Component`, `Product`, `LogisticsHub`
+  - **Purpose:** Accepts incoming relationships from upstream nodes (e.g., `SUPPLIES`, `SHIPPED_VIA`).
+
+- **Bottom Handle (Lower Connection — Outgoing Edges):**
+  - **Visible on:** `Supplier`, `Component`, `LogisticsHub`
+  - **Purpose:** Originates outgoing relationships to downstream nodes (e.g., `SUPPLIES`, `PART_OF`).
 
 ## 🛠️ Main Cypher Queries Explained
 
