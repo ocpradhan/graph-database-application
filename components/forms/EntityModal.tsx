@@ -1,12 +1,8 @@
 // Node/Edge creation dialogs
 "use client";
 
-import {
-  createNode,
-  updateNode,
-  fetchNodeDetails,
-  ServiceError,
-} from "@/lib/data-service";
+import { createNode, updateNode, fetchNodeDetails } from "@/lib/data-service";
+import { ServiceError } from "@/types/response-types";
 import React, { useState, useEffect } from "react";
 import {
   Dialog,
