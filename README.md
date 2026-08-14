@@ -6,7 +6,7 @@
 
 ## Submission Links
 
-- **Hosted Application Demo:** [REPLACE_WITH_YOUR_HOSTED_APP_URL]
+- **Hosted Application Demo:** [\[REPLACE_WITH_YOUR_HOSTED_APP_URL\]](https://supply-chain-resilience-tracker.vercel.app/)
 - **Screen Recording Video:** [REPLACE_WITH_YOUR_LOOM_OR_DRIVE_LINK]
 - **GitHub Repository:** [REPLACE_WITH_YOUR_GITHUB_REPO_URL]
 
@@ -22,7 +22,7 @@
 
 ---
 
-## 🚀 Setup & Running Instructions
+## Setup & Running Instructions
 
 Follow these steps to set up CognoDB, configure environment variables, seed the database, and run the application locally.
 
@@ -119,7 +119,7 @@ To ensure intuitive visual flow on the React Flow canvas, node handles are stric
   - **Visible on:** `Supplier`, `Component`, `LogisticsHub`
   - **Purpose:** Originates outgoing relationships to downstream nodes (e.g., `SUPPLIES`, `PART_OF`).
 
-## 🛠️ Main Cypher Queries Explained
+## Main Cypher Queries Explained
 
 All Cypher queries in this application are parameterized and executed via the official Neo4j driver over the Bolt protocol to ensure security and prevent Cypher injection vulnerabilities.
 
