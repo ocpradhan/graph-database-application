@@ -55,16 +55,18 @@ COGNODB_PASSWORD=<your-saved-password>
 
 ### Step 3: Install Dependencies
 
-npm install
+`npm install`
 
 ### Step 4: Seed the Database
 
 Populate realistic supply chain entities (Supplier, Component, Product, LogisticsHub) and relationships into your CognoDB instance:
-npm run seed
+
+`npm run seed`
 
 ### Step 5: Start the Application
 
-npm run dev
+`npm run dev`
+
 Open http://localhost:3000 in your browser to interact with the application.
 
 ---
