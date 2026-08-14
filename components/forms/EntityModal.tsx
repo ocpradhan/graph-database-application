@@ -175,8 +175,9 @@ export function EntityModal({
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+            {/* Entity Name Input */}
             <div>
-              <label className="text-xs font-semibold text-slate-600">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Entity Name
               </label>
               <input
@@ -188,37 +189,59 @@ export function EntityModal({
                   }
                 }}
                 placeholder="e.g. Taiwan Semiconductor Co."
-                className={`mt-1 w-full rounded-md border p-2 text-sm focus:outline-none focus:ring-2 ${
+                className={`w-full rounded-md border bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-2 text-sm focus:outline-none focus:ring-2 ${
                   fieldErrors.name
                     ? "border-red-500 focus:ring-red-500"
-                    : "focus:ring-blue-500"
+                    : "border-slate-300 dark:border-slate-700 focus:ring-blue-500"
                 }`}
               />
               {fieldErrors.name && (
-                <p className="mt-1 text-xs font-medium text-red-500">
+                <p className="mt-1 text-xs font-medium text-red-500 dark:text-red-400">
                   {fieldErrors.name}
                 </p>
               )}
             </div>
 
+            {/* Node Type Select Dropdown */}
             <div>
-              <label className="text-xs font-semibold text-slate-600">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Node Type (Label)
-                <select
-                  value={label}
-                  onChange={(e) => setLabel(e.target.value)}
-                  className="mt-1 w-full rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="Supplier">Supplier</option>
-                  <option value="Component">Component</option>
-                  <option value="Product">Product</option>
-                  <option value="LogisticsHub">Logistics Hub</option>
-                </select>
               </label>
+              <select
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
+                className="w-full rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  value="Supplier"
+                >
+                  Supplier
+                </option>
+                <option
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  value="Component"
+                >
+                  Component
+                </option>
+                <option
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  value="Product"
+                >
+                  Product
+                </option>
+                <option
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  value="LogisticsHub"
+                >
+                  Logistics Hub
+                </option>
+              </select>
             </div>
 
+            {/* Risk Score Input */}
             <div>
-              <label className="text-xs font-semibold text-slate-600">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Risk Score (0 - 100)
               </label>
               <input
@@ -231,52 +254,78 @@ export function EntityModal({
                     setFieldErrors((prev) => ({ ...prev, riskScore: "" }));
                   }
                 }}
-                className={`mt-1 w-full rounded-md border p-2 text-sm focus:outline-none focus:ring-2 ${
+                className={`w-full rounded-md border bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-2 text-sm focus:outline-none focus:ring-2 ${
                   fieldErrors.riskScore
                     ? "border-red-500 focus:ring-red-500"
-                    : "focus:ring-blue-500"
+                    : "border-slate-300 dark:border-slate-700 focus:ring-blue-500"
                 }`}
               />
               {fieldErrors.riskScore && (
-                <p className="mt-1 text-xs font-medium text-red-500">
+                <p className="mt-1 text-xs font-medium text-red-500 dark:text-red-400">
                   {fieldErrors.riskScore}
                 </p>
               )}
             </div>
 
-            <hr className="my-2" />
+            <hr className="my-2 border-slate-200 dark:border-slate-800" />
 
+            {/* Target Entity Select Dropdown */}
             <div>
-              <label className="text-xs font-semibold text-slate-600">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Connect To Existing Entity (Optional)
               </label>
               <select
                 value={connectToNodeId}
                 onChange={(e) => setConnectToNodeId(e.target.value)}
-                className="mt-1 w-full rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">-- None (Orphan Node) --</option>
+                <option
+                  className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  value=""
+                >
+                  -- None (Orphan Node) --
+                </option>
                 {availableTargetNodes.map((n) => (
-                  <option key={n.id} value={n.id}>
+                  <option
+                    key={n.id}
+                    value={n.id}
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                  >
                     {n.name} ({n.label})
                   </option>
                 ))}
               </select>
             </div>
 
-            {connectToNodeId && (
+            {/* Relationship Type Select Dropdown */}
+            {Boolean(connectToNodeId) && (
               <div>
-                <label className="text-xs font-semibold text-slate-600">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                   Relationship Type
                 </label>
                 <select
                   value={relationshipType}
                   onChange={(e) => setRelationshipType(e.target.value)}
-                  className="mt-1 w-full rounded-md border p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="SUPPLIES">SUPPLIES</option>
-                  <option value="PART_OF">PART_OF</option>
-                  <option value="SHIPPED_VIA">SHIPPED_VIA</option>
+                  <option
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                    value="SUPPLIES"
+                  >
+                    SUPPLIES
+                  </option>
+                  <option
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                    value="PART_OF"
+                  >
+                    PART_OF
+                  </option>
+                  <option
+                    className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100"
+                    value="SHIPPED_VIA"
+                  >
+                    SHIPPED_VIA
+                  </option>
                 </select>
               </div>
             )}
@@ -284,7 +333,7 @@ export function EntityModal({
             <Button
               type="submit"
               disabled={submitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-medium"
             >
               {submitting
                 ? "Saving..."
