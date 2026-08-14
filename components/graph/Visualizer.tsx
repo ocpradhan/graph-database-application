@@ -18,7 +18,7 @@ import "@xyflow/react/dist/style.css";
 import { GraphNode, GraphEdge } from "@/types/graph";
 import { toast } from "sonner";
 import { CustomNode } from "../nodes/CustomNode";
-import { createRelationship, ServiceError } from "@/lib/data-service";
+import { createRelationship } from "@/lib/data-service";
 
 interface VisualizerProps {
   initialNodes: GraphNode[];
