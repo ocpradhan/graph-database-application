@@ -8,7 +8,6 @@
 
 - **Hosted Application Demo:** [Supply Chain Resilience Tracker Link](https://supply-chain-resilience-tracker.vercel.app/)
 - **Screen Recording Video:** [REPLACE_WITH_YOUR_LOOM_OR_DRIVE_LINK]
-- **GitHub Repository:** [REPLACE_WITH_YOUR_GITHUB_REPO_URL]
 
 ---
 
@@ -59,7 +58,7 @@ COGNODB_PASSWORD=<your-saved-password>
 
 ### Step 4: Seed the Database
 
-Populate realistic supply chain entities (Supplier, Component, Product, LogisticsHub) and relationships into your CognoDB instance:
+Populate realistic supply chain entities (Supplier, Component, Product, LogisticsHub) and relationships into your CognoDB instance (Can be also seeded via the Reset & Seed Graph button in the Application):
 
 `npm run seed`
 
@@ -71,7 +70,7 @@ Open http://localhost:3000 in your browser to interact with the application.
 
 ---
 
-## Graph DB vs Relational DB Justification
+## Why Graph DB??
 
 This application relies on multi-hop connectivity queries to compute downstream blast radiuses when a vendor or hub experiences an outage.
 
@@ -215,3 +214,17 @@ RETURN r;
 MATCH (n {id: $nodeId})
 DETACH DELETE n
 ```
+
+---
+
+## 📸 Application Screenshots
+
+| View                        | Preview                                                    |
+| :-------------------------- | :--------------------------------------------------------- |
+| **Graph Visualizer Canvas** | ![Graph Visualizer Canvas](./public/docs/canvas.png)       |
+| **Blast Radius Simulation** | ![Blast Radius Simulation](./public/docs/blast-radius.png) |
+| **Entity Form**             | ![Entity Form](./public/docs/form-1.png)                   |
+
+| **Graph Visualizer Canvas Dark Mode** | ![Graph Visualizer Canvas](./public/docs/canvas-dark.png) |
+| **Blast Radius Simulation Dark Mode** | ![Blast Radius Simulation](./public/docs/blast-radius-dark.png) |
+| **Entity Form Dark Mode** | ![Entity Form](./public/docs/form-1-dark.png) |
