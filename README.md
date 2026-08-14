@@ -7,7 +7,8 @@
 ## Submission Links
 
 - **Hosted Application Demo:** [Supply Chain Resilience Tracker Link](https://supply-chain-resilience-tracker.vercel.app/)
-- **Screen Recording Video:** [REPLACE_WITH_YOUR_LOOM_OR_DRIVE_LINK]
+
+* **Screen Recording Video:** [Watch on Loom](https://www.loom.com/share/8496a18bbbd44032ba4a7210e7dcc38a)
 
 ---
 
