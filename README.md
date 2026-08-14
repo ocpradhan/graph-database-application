@@ -219,12 +219,11 @@ DETACH DELETE n
 
 ## 📸 Application Screenshots
 
-| View                        | Preview                                                    |
-| :-------------------------- | :--------------------------------------------------------- |
-| **Graph Visualizer Canvas** | ![Graph Visualizer Canvas](./public/docs/canvas.png)       |
-| **Blast Radius Simulation** | ![Blast Radius Simulation](./public/docs/blast-radius.png) |
-| **Entity Form**             | ![Entity Form](./public/docs/form-1.png)                   |
-
-| **Graph Visualizer Canvas Dark Mode** | ![Graph Visualizer Canvas](./public/docs/canvas-dark.png) |
+| View                                  | Preview                                                         |
+| :------------------------------------ | :-------------------------------------------------------------- |
+| **Graph Visualizer Canvas**           | ![Graph Visualizer Canvas](./public/docs/canvas.png)            |
+| **Blast Radius Simulation**           | ![Blast Radius Simulation](./public/docs/blast-radius.png)      |
+| **Entity Form**                       | ![Entity Form](./public/docs/form-1.png)                        |
+| **Graph Visualizer Canvas Dark Mode** | ![Graph Visualizer Canvas](./public/docs/canvas-dark.png)       |
 | **Blast Radius Simulation Dark Mode** | ![Blast Radius Simulation](./public/docs/blast-radius-dark.png) |
-| **Entity Form Dark Mode** | ![Entity Form](./public/docs/form-1-dark.png) |
+| **Entity Form Dark Mode**             | ![Entity Form](./public/docs/form-1-dark.png)                   |
